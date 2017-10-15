@@ -85,6 +85,9 @@
                     android:text="远程锁屏"
                     android:textColor="@color/purple"
                     />
+
+
+
                 <TextView
                     style="@style/textview16sp"
                     android:layout_width="0dp"
