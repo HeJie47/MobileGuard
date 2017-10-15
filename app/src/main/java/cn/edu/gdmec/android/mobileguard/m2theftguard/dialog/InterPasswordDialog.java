@@ -13,21 +13,23 @@ import android.widget.TextView;
 import cn.edu.gdmec.android.mobileguard.R;
 
 /**
- * Created by Rebirth on 2017/10/13.
+ * Created by ASUS PRO on 2017/9/27.
  */
 
-public class InterPasswordDialog extends Dialog implements View.OnClickListener {
-
+public class InterPasswordDialog extends Dialog implements View.OnClickListener{
     private TextView mTitleTV;
-    public EditText mInterET;
-    public Button mOKBtn;
-    private Button mCancleBth;
+    private EditText mInterET;
+    private Button mOKBtn;
+    private Button mCancleBtn;
+
     private MyCallBack myCallBack;
     private Context context;
+
     public InterPasswordDialog(@NonNull Context context) {
-        super(context,R.style.dialog_custom);
+        super(context, R.style.dialog_custom);
         this.context = context;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         setContentView(R.layout.inter_password_dialog);
@@ -39,23 +41,25 @@ public class InterPasswordDialog extends Dialog implements View.OnClickListener 
         mTitleTV = (TextView)findViewById(R.id.tv_interpwd_title);
         mInterET = (EditText)findViewById(R.id.et_inter_password);
         mOKBtn = (Button)findViewById(R.id.btn_comfirm);
-        mCancleBth = (Button)findViewById(R.id.btn_dismiss);
+        mCancleBtn = (Button)findViewById(R.id.btn_dismiss);
         mOKBtn.setOnClickListener(this);
-        mCancleBth.setOnClickListener(this);
+        mCancleBtn.setOnClickListener(this);
     }
+
     public void setTitle(String title){
         if (!TextUtils.isEmpty(title)){
             mTitleTV.setText(title);
         }
     }
+
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
+        switch (view.getId()){
             case R.id.btn_comfirm:
                 myCallBack.confirm();
                 break;
             case R.id.btn_dismiss:
-                myCallBack.cancel();
+                myCallBack.cancle();
                 break;
         }
     }
@@ -68,11 +72,8 @@ public class InterPasswordDialog extends Dialog implements View.OnClickListener 
         this.myCallBack = myCallBack;
     }
 
-
-
-
-    public interface MyCallBack {
+    public interface MyCallBack{
         void confirm();
-        void cancel();
+        void cancle();
     }
 }

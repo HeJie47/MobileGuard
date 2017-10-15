@@ -33,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
         gv_home.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.print(i);
+
                 switch (i){
                     case 0:
                         if (isSetUpPassword()){
@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode,event);
     }
     private void showSetUpPswdDialog(){
-        final  SetUpPasswordDialog setUpPasswordDialog = new SetUpPasswordDialog(HomeActivity.this);
+        final SetUpPasswordDialog setUpPasswordDialog = new SetUpPasswordDialog(HomeActivity.this);
         setUpPasswordDialog.setCallBack(new SetUpPasswordDialog.MyCallBack(){
             @Override
             public void ok(){
@@ -109,10 +109,8 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
 
-
-
             @Override
-            public void cancel(){
+            public void cancle(){
                 mInPswdDialog.dismiss();
             }
         });

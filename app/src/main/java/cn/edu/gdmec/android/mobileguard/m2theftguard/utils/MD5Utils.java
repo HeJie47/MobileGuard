@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by student on 17/10/10.
+ * Created by 杜卓 on 2017/10/7.
  */
 
 public class MD5Utils {
@@ -22,10 +22,10 @@ public class MD5Utils {
                     sb.append(hex);
                 }
             }
-            return sb.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             return "";
         }
+        return text;//报错自动添加
     }
 }
