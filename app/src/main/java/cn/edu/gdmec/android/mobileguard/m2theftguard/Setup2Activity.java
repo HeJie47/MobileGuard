@@ -59,7 +59,7 @@ public class Setup2Activity extends BaseSetupActivity implements View.OnClickLis
     @Override
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.btn_bind_sim;
+            case R.id.btn_bind_sim:
                 bindSIM();
                 break;
         }
