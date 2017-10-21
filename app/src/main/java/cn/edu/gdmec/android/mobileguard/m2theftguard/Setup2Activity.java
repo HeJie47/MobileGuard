@@ -15,6 +15,8 @@ import cn.edu.gdmec.android.mobileguard.R;
  * Created by Rebirth on 2017/10/15.
  */
 
+
+
 public class Setup2Activity extends BaseSetupActivity implements View.OnClickListener{
     private TelephonyManager mTelephonyManager;
     private Button mBindSIMBtn;
