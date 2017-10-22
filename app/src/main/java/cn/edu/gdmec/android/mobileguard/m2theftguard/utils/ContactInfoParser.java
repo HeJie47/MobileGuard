@@ -24,20 +24,28 @@ public class ContactInfoParser {
         Cursor cursor = resolver.query(uri,new String[] {"contact_id"},null,null,null);
         while (cursor.moveToNext()){
             String id = cursor.getString(0);
-            ContactInfo info = new ContactInfo();
-            info.id = id;
-            Cursor daraCursor = resolver.query(datauri,new String[] {"data1","mimetype"},"raw_contact_id=?",new String[] {id},null);
-            while (daraCursor.moveToNext()){
-                String data1 = daraCursor.getString(0);
-                String mimetype = daraCursor.getString(1);
-                if ("vnd.android.cursor.item/phone_v2".equals(mimetype)){
-                    System.out.print("电话=" + data1);
-                    info.phone = data1;
+            if (id != null){
+                System.out.println("联系人id：" + id);
+                ContactInfo info = new ContactInfo();
+                info.id = id;
+                Cursor daraCursor = resolver.query(datauri,new String[] {"data1","mimetype"},"raw_contact_id=?",new String[] {id},null);
+                while (daraCursor.moveToNext()){
+                    String data1 = daraCursor.getString(0);
+                    String mimetype = daraCursor.getString(1);
+                    if ("vnd.android.cursor.item/name".equals(mimetype)){
+                        System.out.print("姓名=" + data1);
+                        info.name = data1;
+                    }else if("vnd.android.cursor.item/phone_v2".equals(mimetype)){
+                        System.out.print("电话=" + data1);
+                        info.phone = data1;
+                    }
                 }
+                if (TextUtils.isEmpty(info.name) && TextUtils.isEmpty(info.phone))continue;
+                infos.add(info);
+                daraCursor.close();
             }
-            if (TextUtils.isEmpty(info.name) && TextUtils.isEmpty(info.phone))continue;
-            infos.add(info);
-            daraCursor.close();
+
+
         }
         cursor.close();
         return infos;

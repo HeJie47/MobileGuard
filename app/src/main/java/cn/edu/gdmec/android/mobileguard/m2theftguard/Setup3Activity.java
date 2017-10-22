@@ -22,7 +22,7 @@ public class Setup3Activity extends BaseSetupActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_3);
         ((RadioButton) findViewById(R.id.rb_third)).setChecked(true);
-        ((RadioButton) findViewById(R.id.rb_third)).setChecked(true);
+
         findViewById(R.id.btn_addcontact).setOnClickListener(this);
         mInputPhone = (EditText)findViewById(R.id.et_inputphone);
         String safephone = sp.getString("safephone",null);
@@ -59,7 +59,7 @@ public class Setup3Activity extends BaseSetupActivity implements View.OnClickLis
     }
     @Override
     protected void onActivityResult(int requestCode,int resultCode,Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode,resultCode, data);
         if (data!=null){
             String phone = data.getStringExtra("phone");
             mInputPhone.setText(phone);
