@@ -13,6 +13,7 @@ public class App extends Application {
         super.onCreate();
         correctSIM();
     }
+
     public void correctSIM(){
         SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
         boolean protecting = sp.getBoolean("protecting", true);
