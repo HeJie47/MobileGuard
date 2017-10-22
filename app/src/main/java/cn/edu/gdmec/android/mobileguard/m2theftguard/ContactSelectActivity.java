@@ -24,7 +24,7 @@ import cn.edu.gdmec.android.mobileguard.m2theftguard.utils.ContactInfoParser;
 public class ContactSelectActivity extends AppCompatActivity implements View.OnClickListener{
     private ListView mListView;
     private ContactAdapter adapter;
-    private List<ContactInfo> systemContacts;
+    private List<ContactInfo>systemContacts;
     Handler mHandler = new Handler(){
         public void handleMessage(android.os.Message msg){
             switch (msg.what){
@@ -35,7 +35,7 @@ public class ContactSelectActivity extends AppCompatActivity implements View.OnC
                     }
                     break;
             }
-        };
+        }
     };
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -45,23 +45,25 @@ public class ContactSelectActivity extends AppCompatActivity implements View.OnC
     }
 
     private void initView() {
-        ((TextView)findViewById(R.id.tv_title)).setText("选择联系人");
-        ImageView mLeftImgv = (ImageView) findViewById(R.id.imgv_leftbtn);
+        ((TextView) findViewById(R.id.tv_title)).setText("选择联系人");
+        ImageView mLeftImgv= (ImageView) findViewById(R.id.imgv_leftbtn);
         mLeftImgv.setOnClickListener(this);
         mLeftImgv.setImageResource(R.drawable.back);
-        findViewById(R.id.rl_titlebar).setBackgroundColor(getResources().getColor(R.color.purple));
+        findViewById(R.id.rl_titlebar).setBackgroundColor(
+                getResources().getColor(R.color.purple));
         mListView = (ListView) findViewById(R.id.lv_contact);
-        new Thread(){
+        new  Thread(){
             public void run(){
                 systemContacts = ContactInfoParser.getSystemContact(ContactSelectActivity.this);
                 systemContacts.addAll(ContactInfoParser.getSimContacts(ContactSelectActivity.this));
                 mHandler.sendEmptyMessage(10);
-            };
+            }
         }.start();
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
             @Override
-            public void onItemClick(AdapterView<?> parent,View view,int position,long id){
-                ContactInfo item = (ContactInfo) adapter.getItem(position);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ContactInfo item = (ContactInfo)adapter.getItem(position);
                 Intent intent = new Intent();
                 intent.putExtra("phone",item.phone);
                 setResult(0,intent);
@@ -71,12 +73,11 @@ public class ContactSelectActivity extends AppCompatActivity implements View.OnC
     }
 
     @Override
-    public void onClick(View view){
+    public void onClick(View view) {
         switch (view.getId()){
             case R.id.imgv_leftbtn:
                 finish();
                 break;
         }
     }
-
 }
