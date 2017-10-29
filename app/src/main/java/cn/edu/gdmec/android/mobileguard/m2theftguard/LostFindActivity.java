@@ -2,9 +2,7 @@ package cn.edu.gdmec.android.mobileguard.m2theftguard;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.wifi.aware.PublishConfig;
 import android.os.Bundle;
-import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -44,6 +42,7 @@ public class LostFindActivity extends AppCompatActivity implements View.OnClickL
         TextView mTitleTV = (TextView)findViewById(R.id.tv_title);
         mTitleTV.setText("手机防盗");
         ImageView mLeftImgv = (ImageView) findViewById(R.id.imgv_leftbtn);
+        mLeftImgv.setOnClickListener(this);
         mLeftImgv.setImageResource(R.drawable.back);
         findViewById(R.id.rl_titlebar).setBackgroundColor(getResources().getColor(R.color.purple));
         mSafePhoneTV = (TextView) findViewById(R.id.tv_safephone);

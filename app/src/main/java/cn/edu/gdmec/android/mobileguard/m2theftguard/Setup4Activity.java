@@ -27,7 +27,8 @@ public class Setup4Activity extends BaseSetupActivity {
 
     private void initView(){
         ((RadioButton)findViewById(R.id.rb_four)).setChecked(true);
-        mStatusTV = (TextView) findViewById(R.id.togglebtn_securityfunction);
+        mStatusTV = (TextView) findViewById(R.id.tv_setup4_status);
+        mToggleButton = (ToggleButton)findViewById(R.id.togglebtn_securityfunction) ;
         mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
@@ -56,7 +57,7 @@ public class Setup4Activity extends BaseSetupActivity {
     public void showNext(){
         //跳转至防盗保护页面
         SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean("isSetUo", true);
+        editor.putBoolean("isSetUp", true);
         editor.commit();
         startActivityAndFinishSelf(LostFindActivity.class);
     }
