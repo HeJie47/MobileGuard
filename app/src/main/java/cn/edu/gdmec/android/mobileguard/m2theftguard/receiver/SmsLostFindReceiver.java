@@ -46,6 +46,7 @@ public class SmsLostFindReceiver extends BroadcastReceiver{
                     if ("#*location*#".equals(body)){
                         Log.i(TAG, "返回位置信息。");
                         Intent service = new Intent(context, GPSLocationService.class);
+                        context.startService(service);
                         abortBroadcast();
                     }else if ("#*alarm*#".equals(body)){
                         Log.i(TAG, "播放报警音乐。");
