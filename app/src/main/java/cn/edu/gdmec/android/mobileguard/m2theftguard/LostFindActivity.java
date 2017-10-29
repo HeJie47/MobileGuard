@@ -34,6 +34,7 @@ public class LostFindActivity extends AppCompatActivity implements View.OnClickL
         initView();
     }
 
+
     private boolean isSetUp(){
         return msharedPreferences.getBoolean("isSetUp", false);
     }
