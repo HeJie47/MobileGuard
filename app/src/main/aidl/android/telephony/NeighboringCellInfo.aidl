@@ -1,9 +1,9 @@
-// ITelephony.aidl
+// NeighboringCellInfo.aidl
 package android.telephony;
 
 // Declare any non-default types here with import statements
 
-interface ITelephony {
+interface NeighboringCellInfo {
     /**
      * Demonstrates some basic types that you can use as parameters
      * and return values in AIDL.

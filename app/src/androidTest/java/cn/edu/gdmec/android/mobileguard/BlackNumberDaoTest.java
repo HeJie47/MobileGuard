@@ -39,7 +39,7 @@ public class BlackNumberDaoTest {
             BlackContactInfo info = new BlackContactInfo();
             info.phoneNumber = 13500000000l + i + "";
             info.contactName = "zhangsan" + i;
-            info.mode = random.nextInt(3) + i;
+            info.mode = random.nextInt(3) + 1;
             dao.add(info);
         }
     }
