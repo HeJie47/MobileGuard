@@ -52,7 +52,7 @@ public class InterceptCallReciever extends BroadcastReceiver{
                         //
                         //
                         Uri uri = Uri.parse("content://call_log/calls");
-                        context.getContentResolver().registerContentObserver(uri, true, new CallLogObserver(new Handler(), mIncomingNumber,context);
+                        context.getContentResolver().registerContentObserver(uri, true, new CallLogObserver(new Handler(), mIncomingNumber,context));
                         endCall(context);
                     }
                     break;
@@ -96,13 +96,12 @@ public class InterceptCallReciever extends BroadcastReceiver{
     public void endCall(Context context){
         try {
             Class clazz = context.getClassLoader().loadClass("android.os.ServiceManager");
-            Method method = clazz.getDeclaredMethod("getService", String.class);
-            IBinder iBinder = (IBinder) method.invoke(null, Context.TELEPHONY_SERVICE);
+            Method method = clazz.getDeclaredMethod("getService",String.class);
+            IBinder iBinder = (IBinder) method.invoke(null,Context.TELECOM_SERVICE);
             ITelephony itelephony = ITelephony.Stub.asInterface(iBinder);
             itelephony.endCall();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
