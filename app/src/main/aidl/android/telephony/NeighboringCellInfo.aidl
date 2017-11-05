@@ -2,7 +2,7 @@
 package android.telephony;
 
 // Declare any non-default types here with import statements
-
+parcelable NeighboringCellInfo;
 interface NeighboringCellInfo {
     /**
      * Demonstrates some basic types that you can use as parameters
