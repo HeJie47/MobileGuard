@@ -71,7 +71,7 @@ public class AppManagerAdapter extends BaseAdapter {
         //如果 position为0，则为TextView
         if (i == 0){
             TextView tv = getTextView();
-            tv.setText("用户程序：" + SystemAppInfos.size() + "个");
+            tv.setText("用户程序：" + UserAppInfos.size() + "个");
             return tv;
             //系统应用
         } else if (i == (UserAppInfos.size() + 1)){
@@ -95,9 +95,9 @@ public class AppManagerAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             view = View.inflate(context, R.layout.item_appmanager_list, null);
             viewHolder.mAppIconImgv = (ImageView) view.findViewById(R.id.imgv_appicon);
-            viewHolder.mAppLocationTV = (TextView) view.findViewById(R.id.tv_appsroom);
+            viewHolder.mAppLocationTV = (TextView) view.findViewById(R.id.tv_appisroom);
             viewHolder.mAppSizeTV = (TextView) view.findViewById(R.id.tv_appsize);
-            viewHolder.mAppNameTV = (TextView) view.findViewById(R.id.tv_name);
+            viewHolder.mAppNameTV = (TextView) view.findViewById(R.id.tv_appname);
             viewHolder.mLuanchAppTV = (TextView) view.findViewById(R.id.tv_launch_app);
             viewHolder.mSettingAppTV = (TextView) view.findViewById(R.id.tv_setting_app);
             viewHolder.mShareAppTV = (TextView) view.findViewById(R.id.tv_share_app);
@@ -173,8 +173,8 @@ public class AppManagerAdapter extends BaseAdapter {
         }
 
         @Override
-        public void onClick(View v) {
-            switch (v.getId()){
+        public void onClick(View view) {
+            switch (view.getId()){
                 case R.id.tv_launch_app:
                     //启动应用
                     EngineUtils.startApplication(context, appInfo);

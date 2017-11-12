@@ -1,5 +1,6 @@
 package cn.edu.gdmec.android.mobileguard.m4appmanager;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -21,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.edu.gdmec.android.mobileguard.R;
-import cn.edu.gdmec.android.mobileguard.m2theftguard.receiver.BootCompleteReceiver;
 import cn.edu.gdmec.android.mobileguard.m4appmanager.adapter.AppManagerAdapter;
 import cn.edu.gdmec.android.mobileguard.m4appmanager.entity.AppInfo;
 import cn.edu.gdmec.android.mobileguard.m4appmanager.utils.AppInfoParser;
@@ -85,7 +85,7 @@ public class AppManagerActivity extends AppCompatActivity implements View.OnClic
      * 接受应用程序卸载的广播
      * @author admin
      */
-    class UninstallRececiver extends BootCompleteReceiver{
+    private class UninstallRececiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent){
             //收到广播了
@@ -113,7 +113,7 @@ public class AppManagerActivity extends AppCompatActivity implements View.OnClic
         mLeftImgv.setOnClickListener(this);
         mLeftImgv.setImageResource(R.drawable.back);
         mPhoneMemoryTV = (TextView) findViewById(R.id.tv_phonememory_appmanager);
-        mSDMemoryTV = (TextView) findViewById(R.id.tv_sdmenory_appmanager);
+        mSDMemoryTV = (TextView) findViewById(R.id.tv_sdmemory_appmanager);
         mAppNumTV = (TextView) findViewById(R.id.tv_appnumber);
         mListView = (ListView) findViewById(R.id.lv_appmanager);
         //拿到手机剩余内存和SD卡剩余内存

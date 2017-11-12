@@ -14,7 +14,7 @@
             style="@style/textview12sp"
             android:layout_alignParentLeft="true"/>
         <TextView
-            android:id="@+id/tv_sdmenory_appmanager"
+            android:id="@+id/tv_sdmemory_appmanager"
             style="@style/textview12sp"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
