@@ -125,6 +125,7 @@ public class AppManagerAdapter extends BaseAdapter {
         viewHolder.mUninstallTV.setOnClickListener(listener);
         viewHolder.mAboutTV.setOnClickListener(listener);
 
+
         return view;
     }
 
