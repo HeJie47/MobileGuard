@@ -117,6 +117,7 @@ public class AppManagerAdapter extends BaseAdapter {
                 viewHolder.mAppOptionLL.setVisibility(View.GONE);
             }
         }
+
         MyClickListener listener = new MyClickListener(appInfo);
         viewHolder.mLuanchAppTV.setOnClickListener(listener);
         viewHolder.mSettingAppTV.setOnClickListener(listener);
