@@ -34,7 +34,7 @@ public class AppInfoParser {
             appinfo.packageName = packname;
             Drawable icon = packInfo.applicationInfo.loadIcon(pm);
             appinfo.icon = icon;
-            String appname = packInfo.applicationInfo.loadIcon(pm).toString();
+            String appname = packInfo.applicationInfo.loadLabel(pm).toString();
             appinfo.appName = appname;
             //应用程序apk包的路径
             String apkpath = packInfo.applicationInfo.sourceDir;

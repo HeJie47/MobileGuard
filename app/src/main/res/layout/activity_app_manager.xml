@@ -18,20 +18,23 @@
             style="@style/textview12sp"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ListView
             android:id="@+id/lv_appmanager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:listSelector="@color/transparent"/>
+
         <TextView
             android:id="@+id/tv_appnumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/graye5"
             android:padding="5dp"
-            android:textColor="@color/black"
-            android:background="@color/graye5"/>
+            android:textColor="@color/black"/>
     </FrameLayout>
 </LinearLayout>
