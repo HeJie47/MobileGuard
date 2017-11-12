@@ -39,6 +39,7 @@ public class BlackNumberDao {
         values.put("number",blackContactInfo.phoneNumber);
         values.put("name",blackContactInfo.phoneNumber);
         values.put("mode",blackContactInfo.phoneNumber);
+        values.put("type",blackContactInfo.type);
         long rowid = db.insert("blacknumber",null,values);
         if (rowid == -1){//插入数据不成功
             return false;
@@ -70,7 +71,7 @@ public class BlackNumberDao {
     public List<BlackContactInfo> getPageBlackNumber(int pagenumber,int pagesize){
         SQLiteDatabase db = blackNumberOpenHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(
-                "select number,mode,name from blacknumber limit ? offset ?",
+                "select number,mode,name,type from blacknumber limit ? offset ?",
                 new String[]{
                         String.valueOf(pagesize),String.valueOf(pagesize * pagenumber)
                 });
@@ -80,6 +81,7 @@ public class BlackNumberDao {
             info.phoneNumber = cursor.getString(0);
             info.mode = cursor.getInt(1);
             info.contactName = cursor.getString(2);
+            info.type = cursor.getString(3);
             mBlackContactInfos.add(info);
         }
         cursor.close();
