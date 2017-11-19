@@ -89,7 +89,7 @@ public class VirusScanActivity extends AppCompatActivity implements View.OnClick
             public void run() {
                 try {
                     File file = new File(getFilesDir(), dbname);
-                    if (file.exists() && file.length() > 0) {
+                    if (file.exists() && file.length() > 0 && fromPath.equals("")) {
                         Log.i("VirusScanActivity", "数据库已存在！");
                         handler.sendEmptyMessage(0);
                         return;
