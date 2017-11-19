@@ -59,7 +59,7 @@ public class ScanVirusAdapter extends BaseAdapter {
         }
         ScanAppInfo scanAppInfo = mScanAppInfos.get(i);
         if (!scanAppInfo.isVirus){
-            holder.mScanIconImgv.setBackgroundColor(R.drawable.blue_right_icon);
+            holder.mScanIconImgv.setBackgroundResource(R.drawable.blue_right_icon);
             holder.mAppNameTV.setTextColor(context.getResources().getColor(R.color.black));
             holder.mAppNameTV.setText(scanAppInfo.appName);
         }else {
