@@ -10,11 +10,9 @@ import android.os.Environment;
 
 import java.io.File;
 
-/**
- * Created by Swindler on 2017/9/27.
- */
 
 public class MyUtils {
+    //获取版本号
     public static String getVersion(Context context){
         PackageManager packageManager = context.getPackageManager();
         try {
