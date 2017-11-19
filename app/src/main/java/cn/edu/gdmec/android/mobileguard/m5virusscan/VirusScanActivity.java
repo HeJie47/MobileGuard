@@ -112,6 +112,7 @@ public class VirusScanActivity extends AppCompatActivity implements View.OnClick
                     }
                     is.close();
                     fos.close();
+                    handler.sendEmptyMessage(0);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

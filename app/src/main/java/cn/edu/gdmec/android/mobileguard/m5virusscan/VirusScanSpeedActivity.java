@@ -4,9 +4,11 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
@@ -48,7 +50,7 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
     private ScanVirusAdapter adapter;
     private List<ScanAppInfo> mScanAppInfos = new ArrayList<ScanAppInfo>();
     private SharedPreferences mSP;
-    private android.os.Handler mHandler = new android.os.Handler(){
+    private Handler mHandler = new Handler(){
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
 
@@ -86,6 +88,7 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstancesState){
         super.onCreate(savedInstancesState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_virus_scan_speed);
         pm = getPackageManager();
         mSP = getSharedPreferences("config",MODE_PRIVATE);
