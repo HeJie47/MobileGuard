@@ -34,17 +34,9 @@ import cn.edu.gdmec.android.mobileguard.m1home.entity.VersionEntity;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
-/**
- * Created by ASUS PRO on 2017/9/27.
- */
+
 
 public class VersionUpdateUtils {
-    //声明常量
-    private static final int MESSAGE_IO_ERROR = 102;
-    private static final int MESSAGE_JSON_ERROR = 103;
-    private static final int MESSAGE_SHOW_DIALOG = 104;
-    private static final int MESSAGE_ENTERHOME = 105;
-
     //声明类属性
     private String mVersion;
     private Activity context;
@@ -61,25 +53,34 @@ public class VersionUpdateUtils {
     //下载完毕的广播接收者
     private BroadcastReceiver broadcastReceiver;
 
+    //声明常量
+    private static final int MESSAGE_IO_ERROR = 102;
+    private static final int MESSAGE_JSON_ERROR = 103;
+    private static final int MESSAGE_SHOW_DIALOG = 104;
+    private static final int MESSAGE_ENTERHOME = 105;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MESSAGE_IO_ERROR:
-                    Toast.makeText(context, "IO错误", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "IO错误", Toast.LENGTH_LONG).show();
+                    enterHome();
                     break;
                 case MESSAGE_JSON_ERROR:
-                    Toast.makeText(context, "JSON解析错误", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "JSON解析错误", Toast.LENGTH_LONG).show();
+                    enterHome();
                     break;
                 case MESSAGE_SHOW_DIALOG:
                     showUpdateDialog(versionEntity);
                     break;
                 case MESSAGE_ENTERHOME:
-                    /*Intent intent = new Intent(context, HomeActivity.class);
+                    //Intent intent = new Intent(context, HomeActivity.class);
+                    /*Intent intent = new Intent ( context, VirusScanActivity.class );
                     context.startActivity(intent);
-                    context.finish();
-                    break;*/
-                    //模块5
+
+                    context.finish();*/
+                    //老师模块5
                     if(nextActivty!=null) {
                         Intent intent = new Intent(context, nextActivty);
                         context.startActivity(intent);
@@ -89,44 +90,59 @@ public class VersionUpdateUtils {
             }
         }
     };
-
-    //构造方法模块5
+    //构造方法老师模块5
+    //public VersionUpdateUtils(String mVersion, Activity context) {
     public VersionUpdateUtils(String mVersion, Activity context,DownloadCallback downloadCallback,Class<?> nextActivty) {
         this.mVersion = mVersion;
         this.context = context;
         this.downloadCallback = downloadCallback;
         this.nextActivty = nextActivty;
     }
-    //模块5，获取服务器版本号
-    public void getCloudVersion(String url) {
-        try {
-            HttpClient httpClient = new DefaultHttpClient();
-            //连接超时
-            HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 5000);
-            //请求超时
-            HttpConnectionParams.setSoTimeout(httpClient.getParams(), 5000);
-            //HttpGet httpGet = new HttpGet("http://android2017.duapp.com/updateinfo.html");
-            HttpGet httpGet = new HttpGet(url);
-            HttpResponse execute = httpClient.execute(httpGet);
 
+//    public VersionUpdateUtils(String localDbVersion, VirusScanActivity virusScanActivity) {
+//
+//
+//    }
+
+    //模块5老师，获取服务器版本号
+    //public void getCloudVersion() {
+    public void getCloudVersion(String url){
+        try {
+            HttpClient httpClient = new DefaultHttpClient ();
+            /*连接超时*/
+            HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 5000);
+            /*请求超时*/
+            HttpConnectionParams.setSoTimeout(httpClient.getParams(), 5000);
+            //HttpGet httpGet = new HttpGet ( "http://android2017.duapp.com/updateinfo.html" );
+            //HttpGet httpGet =new HttpGet("http://android2017.duapp.com/virusupdateinfo.html");
+            HttpGet httpGet = new HttpGet(url);
+
+            HttpResponse execute = httpClient.execute(httpGet);
             if (execute.getStatusLine().getStatusCode() == 200) {
                 // 请求和响应都成功了
                 HttpEntity httpEntity = execute.getEntity();
                 String result = EntityUtils.toString(httpEntity, "utf-8");
-                System.out.println(result);
                 // 创建jsonObject对象
+                System.out.println(result);
+
                 JSONObject jsonObject = new JSONObject(result);
                 versionEntity = new VersionEntity();
                 String code = jsonObject.getString("code");
+
                 versionEntity.versioncode = code;
                 String des = jsonObject.getString("des");
                 versionEntity.description = des;
                 String apkurl = jsonObject.getString("apkurl");
                 versionEntity.apkurl = apkurl;
 
+                //versionEntity.versioncode= jsonObject.getString("code");
+
+                //versionEntity.description = jsonObject.getString("des");
+
+                //versionEntity.apkurl = jsonObject.getString("apkurl");
                 if (!mVersion.equals(versionEntity.versioncode)) {
                     // 版本号不一致
-                    handler.sendEmptyMessage(MESSAGE_SHOW_DIALOG);
+                    handler.sendEmptyMessage ( MESSAGE_SHOW_DIALOG );
                 }
             }
         } catch (IOException e) {
@@ -144,8 +160,8 @@ public class VersionUpdateUtils {
         builder.setTitle("检测有新版本：" + versionEntity.versioncode);
         builder.setMessage(versionEntity.description);
         builder.setCancelable(false);
-        builder.setIcon(R.mipmap.ic_launcher_round);
-        builder.setPositiveButton("立即升级", new DialogInterface.OnClickListener() {
+        builder.setIcon( R.mipmap.ic_launcher_round);
+        builder.setPositiveButton("立刻升级", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //下载apk
@@ -171,6 +187,7 @@ public class VersionUpdateUtils {
     private void downloadNewApk(String apkurl) {
         DownloadUtils downloadUtils = new DownloadUtils();
         //downloadUtils.downloadApk(apkurl, "mobileguard.apk", context);
+        //downloadUtils.downloadApk(apkurl,"antivirus.db",context);
         String filename = "downloadfile";
         String suffixes="avi|mpeg|3gp|mp3|mp4|wav|jpeg|gif|jpg|png|apk|exe|pdf|rar|zip|docx|doc|apk|db";
         Pattern pat=Pattern.compile("[\\w]+[\\.]("+suffixes+")");//正则判断
@@ -179,7 +196,9 @@ public class VersionUpdateUtils {
             filename = mc.group();//截取文件名后缀名
         }
         downapk(apkurl, filename, context);
+
     }
+
     public void downapk(String url,String targetFile,Context context){
         //创建下载任务
         DownloadManager.Request request = new DownloadManager.Request( Uri.parse(url));
@@ -206,6 +225,7 @@ public class VersionUpdateUtils {
         listener(downloadId,targetFile);
 
     }
+
     private void listener(final long Id,final String filename) {
         // 注册广播监听系统的下载完成事件。
         IntentFilter intentFilter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);

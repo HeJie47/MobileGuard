@@ -15,7 +15,6 @@ import cn.edu.gdmec.android.mobileguard.m5virusscan.entity.ScanAppInfo;
 /**
  * Created by admin on 2017/11/18.
  */
-
 public class ScanVirusAdapter extends BaseAdapter{
     private List<ScanAppInfo> mScanAppInfos;
     private Context context;
