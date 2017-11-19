@@ -54,6 +54,7 @@ public class MD5Utils {
                     sb.append(hex);
                 }
             }
+            return sb.toString ();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Handler;
 
 import cn.edu.gdmec.android.mobileguard.R;
 import cn.edu.gdmec.android.mobileguard.m2theftguard.utils.MD5Utils;
@@ -49,9 +48,9 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
     private ScanVirusAdapter adapter;
     private List<ScanAppInfo> mScanAppInfos = new ArrayList<ScanAppInfo>();
     private SharedPreferences mSP;
-    private Handler mHandler = new Handler() {
-        public void handleMessage(android.os.Message msg){
-            switch (msg.what){
+    private android.os.Handler mHandler = new android.os.Handler(){
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
 
                 case SCAN_BENGIN:
                     mScanAppTV.setText("初始化杀毒引擎中...");
@@ -74,6 +73,7 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
                     savaScanTime();
                     break;
             }
+        }
         private void savaScanTime() {
             SharedPreferences.Editor edit = mSP.edit();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
@@ -106,7 +106,7 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
                 msg.what = SCAN_BENGIN;
                 mHandler.sendMessage(msg);
                 List<PackageInfo>installedPackages = pm.getInstalledPackages(0);
-                total = installedPackages.size(0);
+                total = installedPackages.size();
                 for(PackageInfo info : installedPackages){
                     if(!flag){
                         isStop = true;
