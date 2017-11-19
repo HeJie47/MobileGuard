@@ -38,66 +38,67 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
     protected static final int SCAN_FINISH = 102;
     private int total;
     private int process;
+
     private TextView mProcessTV;
     private PackageManager pm;
     private boolean flag;
+
     private boolean isStop;
     private TextView mScanAppTV;
     private Button mCancleBtn;
+
     private ImageView mScanningIcon;
     private RotateAnimation rani;
     private ListView mScanListView;
     private ScanVirusAdapter adapter;
-    private List<ScanAppInfo> mScanAppInfos = new ArrayList<ScanAppInfo>();
-    private SharedPreferences mSP;
-    private Handler mHandler = new Handler(){
-        public void handleMessage(android.os.Message msg) {
-            switch (msg.what) {
 
+    private List<ScanAppInfo> mScanAppInfos = new ArrayList<ScanAppInfo> (  );
+    private SharedPreferences mSP;
+    private Handler mHandler = new Handler() {
+        public void handleMessage(android.os.Message msg){
+            switch (msg.what){
                 case SCAN_BENGIN:
-                    mScanAppTV.setText("初始化杀毒引擎中...");
+                    mScanAppTV.setText ( "初始化杀毒引擎中..." );
                     break;
 
                 case SCANNING:
                     ScanAppInfo info = (ScanAppInfo) msg.obj;
-                    mScanAppTV.setText("正在扫描：" + info.appName);
+                    mScanAppTV.setText ( "正在扫描："+info.appName );
                     int speed = msg.arg1;
-                    mProcessTV.setText((speed * 100 / total) + "%");
-                    mScanAppInfos.add(info);
-                    adapter.notifyDataSetChanged();
-                    mScanListView.setSelection(mScanAppInfos.size());
+                    mProcessTV.setText ( (speed * 100 / total) + "%" );
+                    mScanAppInfos.add ( info );
+                    adapter.notifyDataSetChanged ();
+                    mScanListView.setSelection ( mScanAppInfos.size () );
                     break;
-
                 case SCAN_FINISH:
-                    mScanAppTV.setText("扫描完成! ");
-                    mScanningIcon.clearColorFilter();
-                    mCancleBtn.setBackgroundResource(R.drawable.scan_complete);
-                    savaScanTime();
+                    mScanAppTV.setText ( "扫描完成！" );
+                    mScanningIcon.clearAnimation ();
+                    mCancleBtn.setBackgroundResource ( R.drawable.scan_complete );
+                    saveScanTime();
                     break;
             }
         }
-        private void savaScanTime() {
-            SharedPreferences.Editor edit = mSP.edit();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-            String currentTime = sdf.format(new Date());
-            currentTime = "上次查杀：" + currentTime;
-            edit.putString("lastVirusScan", currentTime);
-            edit.commit();
+        private void saveScanTime(){
+            SharedPreferences.Editor edit = mSP.edit ();
+            SimpleDateFormat sdf = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss", Locale.getDefault () );
+            String currentTime=sdf.format ( new Date (  ) );
+            currentTime = "上次查杀："+currentTime;
+            edit.putString ( "lastVirusScan", currentTime );
+            edit.commit ();
         };
     };
     @Override
-    protected void onCreate(Bundle savedInstancesState){
-        super.onCreate(savedInstancesState);
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate ( savedInstanceState );
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_virus_scan_speed);
-        pm = getPackageManager();
-        mSP = getSharedPreferences("config",MODE_PRIVATE);
+        setContentView ( R.layout.activity_virus_scan_speed );
+        pm = getPackageManager ();
+        mSP = getSharedPreferences ( "config", MODE_PRIVATE );
         initView();
         scanVirus();
     }
-    /**
-     * 扫描病毒  使用线程做耗时任务
-     */
+
+    //扫描病毒 使用线程做耗时任务
     private void scanVirus(){
         flag = true;
         isStop = false;
@@ -211,6 +212,6 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
     @Override
     protected void onDestroy(){
         flag = false;
-        super.onDestroy();
+        super.onDestroy ();
     }
 }
