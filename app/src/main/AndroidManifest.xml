@@ -15,7 +15,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
     <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
-
+    <!--手机杀毒部分-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -95,6 +96,8 @@
             </intent-filter>
         </receiver>
         <activity android:name=".m4appmanager.AppManagerActivity"></activity>
+        <activity android:name=".m5virusscan.VirusScanActivity"></activity>
+        <activity android:name=".m5virusscan.VirusScanSpeedActivity"></activity>
 
     </application>
 
