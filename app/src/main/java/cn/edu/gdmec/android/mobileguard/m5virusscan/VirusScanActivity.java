@@ -27,25 +27,30 @@ import cn.edu.gdmec.android.mobileguard.m5virusscan.dao.AntiVirusDao;
  */
 
 public class VirusScanActivity extends AppCompatActivity implements View.OnClickListener{
-    private TextView mLasTimeTV;
-    private SharedPreferences mSP;
+    private TextView mLastTimeTV;
     private TextView mDbVersionTV;
+    private SharedPreferences mSP;
+
+    //private TextView mScanVersion;
+
+
+    //private String mVersion;
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
+        super.onCreate ( savedInstanceState );
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_virus_scan);
-        mSP = getSharedPreferences("config",MODE_PRIVATE);
+        setContentView ( R.layout.activity_virus_scan );
+        mSP = getSharedPreferences ( "config", MODE_PRIVATE );
+
         copyDB("antivirus.db","");
         initView();
+
     }
-
-
     @Override
-    protected void onResume(){
-        String string = mSP.getString("lastVirusScan","您还没有查杀病毒");
-        mLasTimeTV.setText(string);
-        super.onResume();
+    protected void onResume() {
+        String string=mSP.getString ( "lastVirusScan", "您还没有查杀病毒！" );
+        mLastTimeTV.setText ( string );
+        super.onResume ();
     }
     //模块5
     Handler handler = new Handler(){
@@ -77,77 +82,72 @@ public class VirusScanActivity extends AppCompatActivity implements View.OnClick
         }.start();
     }
 
-    /**
-     * 拷贝病毒数据库
-     * @param String
-     */
-
+    //拷贝病毒数据库
     private void copyDB(final String dbname,final String fromPath) {
         //大文件的拷贝复制一定要用线程，否则很容易出现ANR
-        new Thread(){
+        new Thread (  ){
+            public void run(){
+                try{
+                    File file = new File ( getFilesDir (),dbname );
+                    //if (file.exists ()&&file.length ()>0){
+                    if(file.exists()&&file.length()>0&&fromPath.equals("")){
+                        Log.i ("VirusScanActivity","数据库已存在！");
 
-            public void run() {
-                try {
-                    File file = new File(getFilesDir(), dbname);
-                    if (file.exists() && file.length() > 0 && fromPath.equals("")) {
-                        Log.i("VirusScanActivity", "数据库已存在！");
                         handler.sendEmptyMessage(0);
+
                         return;
                     }
-                    //InputStream is = getAssets().open(dbname);
-                    InputStream is;
 
+                    //InputStream is = getAssets ().open ( dbname );
+                    InputStream is;
                     if (fromPath.equals("")){
                         is = getAssets().open(dbname);
                     }else{
                         file = new File(fromPath,
                                 "antivirus.db");
-                        is= new FileInputStream(file);
+                        is= new FileInputStream (file);
                     }
-                    FileOutputStream fos = openFileOutput(dbname, MODE_PRIVATE);
+
+                    FileOutputStream fos = openFileOutput ( dbname, MODE_PRIVATE );
                     byte[] buffer = new byte[1024];
                     int len = 0;
-                    while ((len = is.read(buffer)) != -1) {
-                        fos.write(buffer, 0, len);
+                    while ((len = is.read (buffer))!=-1){
+                        fos.write ( buffer, 0, len );
                     }
-                    is.close();
-                    fos.close();
+                    is.close ();
+                    fos.close ();
+
                     handler.sendEmptyMessage(0);
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                }catch (Exception e){
+                    e.printStackTrace ();
                 }
             };
-        }.start();
+        }.start ();
     }
 
-
-
-
-    /**
-     * 初始化UI控件
-     */
+    //初始化UI控件
     private void initView(){
-        findViewById(R.id.rl_titlebar).setBackgroundColor(
-                getResources().getColor(R.color.light_blue)
-        );
-        ImageView mLeftImgv = (ImageView)findViewById(R.id.imgv_leftbtn);
-        ((TextView)findViewById(R.id.tv_title)).setText("病毒查杀");
-        mLeftImgv.setOnClickListener(this);
-        mLeftImgv.setImageResource(R.drawable.back);
-        mLasTimeTV = (TextView)findViewById(R.id.tv_lastscantime);
-        findViewById(R.id.rl_allscanvirus).setOnClickListener(this);
-    }
+        findViewById ( R.id.rl_titlebar ).setBackgroundColor (
+                getResources ().getColor ( R.color.light_blue ) );
+        ImageView mLeftImgv = (ImageView ) findViewById ( R.id.imgv_leftbtn );
+        ((TextView) findViewById ( R.id.tv_title )).setText ( "病毒查杀" );
+        mLeftImgv.setOnClickListener ( this );
+        mLeftImgv.setImageResource ( R.drawable.back );
+        mLastTimeTV = (TextView) findViewById ( R.id.tv_lastscantime );
+        //mScanVersion=(TextView)findViewById(R.id.tv_scan_version);
 
+        findViewById ( R.id.rl_allscanvirus ).setOnClickListener ( this );
+    }
     @Override
-    public void onClick(View view) {
-        switch (view.getId()){
+    public void onClick(View view){
+        switch (view.getId ()){
             case R.id.imgv_leftbtn:
-                finish();
+                finish ();
                 break;
             case R.id.rl_allscanvirus:
-                startActivity(new Intent(this,VirusScanSpeedActivity.class));
+                startActivity(new Intent ( this,VirusScanSpeedActivity.class ));
                 break;
         }
-
     }
 }
