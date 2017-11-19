@@ -197,7 +197,7 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
                     startAnim();
                     //重新扫描
                     scanVirus();
-                    mCancleBtn.setBackgroundResource(R.drawable.cancel_scan_btn_selector);
+                    mCancleBtn.setBackgroundResource(R.drawable.cancle_scan_btn_selector);
                 }
                 break;
         }
