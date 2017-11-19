@@ -34,7 +34,7 @@ import cn.edu.gdmec.android.mobileguard.m5virusscan.entity.ScanAppInfo;
 
 public class VirusScanSpeedActivity extends AppCompatActivity implements View.OnClickListener{
     protected static final int SCAN_BENGIN = 100;
-    protected static final int SCANNIMG = 101;
+    protected static final int SCANNING = 101;
     protected static final int SCAN_FINISH = 102;
     private int total;
     private int process;
@@ -58,7 +58,7 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
                     mScanAppTV.setText("初始化杀毒引擎中...");
                     break;
 
-                case SCANNIMG:
+                case SCANNING:
                     ScanAppInfo info = (ScanAppInfo) msg.obj;
                     mScanAppTV.setText("正在扫描：" + info.appName);
                     int speed = msg.arg1;
@@ -102,102 +102,108 @@ public class VirusScanSpeedActivity extends AppCompatActivity implements View.On
         flag = true;
         isStop = false;
         process = 0;
-        mScanAppInfos.clear();
+        mScanAppInfos.clear ();
         new Thread(){
+
             public void run(){
-                Message msg = Message.obtain();
+                Message msg = Message.obtain ();
                 msg.what = SCAN_BENGIN;
                 mHandler.sendMessage(msg);
-                List<PackageInfo>installedPackages = pm.getInstalledPackages(0);
-                total = installedPackages.size();
-                for(PackageInfo info : installedPackages){
-                    if(!flag){
+                List<PackageInfo> installedPackages = pm.getInstalledPackages ( 0 );
+                total = installedPackages.size ();
+                for (PackageInfo info : installedPackages){
+                    if (!flag){
                         isStop = true;
                         return;
                     }
                     String apkpath = info.applicationInfo.sourceDir;
                     //检查获取这个文件的md5特征码
-                    String md5info = MD5Utils.getFileMd5(apkpath);
-                    System.out.println(apkpath);
-                    System.out.println(md5info);
-                    AntiVirusDao antiVirusDao = new AntiVirusDao(
-                            VirusScanSpeedActivity.this.getApplicationContext()
-                    );
-                    String result = antiVirusDao.checkVirus(md5info);
-                    msg = Message.obtain();
-                    msg.what = SCANNIMG;
-                    ScanAppInfo scanAppInfo = new ScanAppInfo();
-                    if(result == null){
-                        scanAppInfo.description = "扫描安全";
-                        scanAppInfo.isVirus = false;
-                    }else {
-                        scanAppInfo.description = result;
-                        scanAppInfo.isVirus = true;
+                    String md5info =MD5Utils.getFileMd5(apkpath);
+                    System.out.println (apkpath);
+                    System.out.println (md5info);
+
+                    AntiVirusDao antiVirusDao = new AntiVirusDao (
+                            VirusScanSpeedActivity.this.getApplicationContext () );
+                    String result = antiVirusDao.checkVirus ( md5info );
+                    msg = Message.obtain ();
+                    msg.what = SCANNING;
+                    ScanAppInfo scanInfo = new ScanAppInfo ();
+                    if (result == null){
+                        scanInfo.description = "扫描安全";
+                        scanInfo.isVirus = false;
+                    }else{
+                        scanInfo.description = result;
+                        scanInfo.isVirus = true;
                     }
                     process++;
-                    scanAppInfo.packagename = info.packageName;
-                    scanAppInfo.appName = info.applicationInfo.loadLabel(pm).toString();
-                    scanAppInfo.appicon = info.applicationInfo.loadIcon(pm);
-                    msg.obj = scanAppInfo;
+                    scanInfo.packagename = info.packageName;
+                    scanInfo.appName = info.applicationInfo.loadLabel ( pm )
+                            .toString ();
+                    scanInfo.appicon = info.applicationInfo.loadIcon ( pm );
+                    msg.obj = scanInfo;
                     msg.arg1 = process;
                     mHandler.sendMessage(msg);
+
                     try{
-                        Thread.sleep(300);
+                        Thread.sleep ( 300 );
                     }catch (InterruptedException e){
-                        e.printStackTrace();
+                        e.printStackTrace ();
                     }
                 }
-                msg =Message.obtain();
+                msg = Message.obtain ();
                 msg.what = SCAN_FINISH;
                 mHandler.sendMessage(msg);
             };
-        }.start();
+        }.start ();
     }
-    private  void  initView(){
-        findViewById(R.id.rl_titlebar).setBackgroundColor(getResources().getColor(R.color.light_blue));
-        ImageView mLeftImgv = (ImageView)findViewById(R.id.imgv_leftbtn);
-        ((TextView)findViewById(R.id.tv_title)).setText("病毒查杀进度");
-        mLeftImgv.setOnClickListener(this);
-        mLeftImgv.setImageResource(R.drawable.back);
-        mProcessTV = (TextView)findViewById(R.id.tv_scanprocess);
-        mScanAppTV = (TextView)findViewById(R.id.tv_scansapp);
-        mCancleBtn = (Button)findViewById(R.id.btn_canclescan);
-        mCancleBtn.setOnClickListener(this);
-        mScanListView = (ListView)findViewById(R.id.lv_scanapps);
-        adapter = new ScanVirusAdapter(mScanAppInfos,this);
-        mScanListView.setAdapter(adapter);
-        mScanningIcon = (ImageView)findViewById(R.id.imgv_scannimgicon);
+    private void initView() {
+        findViewById ( R.id.rl_titlebar ).setBackgroundColor (
+                getResources ().getColor ( R.color.light_blue ) );
+        ImageView mLeftImgv = (ImageView) findViewById ( R.id.imgv_leftbtn );
+        ((TextView) findViewById(R.id.tv_title)).setText ( "病毒查杀进度" );
+        mLeftImgv.setOnClickListener ( this );
+        mLeftImgv.setImageResource ( R.drawable.back );
+        mProcessTV = (TextView) findViewById ( R.id.tv_scanprocess );
+        mScanAppTV = (TextView) findViewById ( R.id.tv_scansapp );
+        mCancleBtn = (Button) findViewById ( R.id.btn_canclescan );
+        mCancleBtn.setOnClickListener ( this );
+        mScanListView = (ListView) findViewById ( R.id.lv_scanapps );
+        adapter = new ScanVirusAdapter ( mScanAppInfos, this );
+        mScanListView.setAdapter ( adapter );
+        mScanningIcon = (ImageView) findViewById ( R.id.imgv_scanningicon );
         startAnim();
     }
-    private  void startAnim(){
-        if(rani == null){
-            rani = new RotateAnimation(0,360, Animation.RELATIVE_TO_SELF,
-                    0.5f, Animation.RELATIVE_TO_SELF,0.5f);
+    private void startAnim(){
+        if (rani == null){
+            rani = new RotateAnimation ( 0, 360, Animation.RELATIVE_TO_SELF,
+                    0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         }
-        rani.setRepeatCount(Animation.INFINITE);
-        rani.setDuration(2000);
-        mScanningIcon.startAnimation(rani);
+        rani.setRepeatCount ( Animation.INFINITE );
+        rani.setDuration ( 2000 );
+        mScanningIcon.startAnimation ( rani );
     }
     @Override
     public void onClick(View view){
-        switch (view.getId()){
+        switch (view.getId ()){
             case R.id.imgv_leftbtn:
-                finish();
+                finish ();
                 break;
             case R.id.btn_canclescan:
                 if (process == total & process > 0){
-                    //扫描完成
-                    finish();
+                    //扫描已完成
+                    finish ();
                 }else if (process > 0 & process < total & isStop == false){
-                    mScanningIcon.clearAnimation();
+                    mScanningIcon.clearAnimation ();
                     //取消扫描
                     flag = false;
-                    mCancleBtn.setBackgroundResource(R.drawable.restart_scan_btn);
+                    //更换背景图片
+                    mCancleBtn.setBackgroundResource ( R.drawable.restart_scan_btn );
                 }else if (isStop){
-                    startAnim();
+                    startAnim ();
                     //重新扫描
-                    scanVirus();
-                    mCancleBtn.setBackgroundResource(R.drawable.cancle_scan_btn_selector);
+                    scanVirus ();
+                    //更换背景图片
+                    mCancleBtn.setBackgroundResource ( R.drawable.cancle_scan_btn_selector );
                 }
                 break;
         }
