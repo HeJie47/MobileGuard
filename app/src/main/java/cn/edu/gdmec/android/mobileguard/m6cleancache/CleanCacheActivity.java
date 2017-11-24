@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Formatter;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,14 +27,14 @@ import cn.edu.gdmec.android.mobileguard.R;
 
 public class CleanCacheActivity extends AppCompatActivity implements View.OnClickListener{
     protected static final int CLEANNING = 100;
-    protected static final int ClEAN_FINISH = 10;
+    protected static final int CLEAN_FINISH = 10;
     private AnimationDrawable animation;
     private long cacheMemory;
     private TextView mMemoryTV;
     private TextView mMemoryUnitTV;
     private PackageManager pm;
     private FrameLayout mCleanCacheFL;
-    private FrameLayout mFinishCleanFl;
+    private FrameLayout mFinishCleanFL;
     private TextView mSizeTV;
 
     private Handler mHandler = new Handler(){
@@ -45,7 +46,7 @@ public class CleanCacheActivity extends AppCompatActivity implements View.OnClic
                     if (memory == cacheMemory){
                         animation.stop();
                         mCleanCacheFL.setVisibility(View.GONE);
-                        mFinishCleanFl.setVisibility(View.VISIBLE);
+                        mFinishCleanFL.setVisibility(View.VISIBLE);
                         mSizeTV.setText("成功清理：" + Formatter.formatFileSize(CleanCacheActivity.this, cacheMemory));
                     }
                     break;
@@ -56,6 +57,7 @@ public class CleanCacheActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_clean_cache);
         initView();
         pm = getPackageManager();
@@ -79,6 +81,7 @@ public class CleanCacheActivity extends AppCompatActivity implements View.OnClic
                     }
                     Random rand = new Random();
                     int i = rand.nextInt();
+                    i = rand.nextInt(1024);
                     memory += 1024 * i;
                     if (memory > cacheMemory){
                         memory = cacheMemory;
@@ -120,7 +123,7 @@ public class CleanCacheActivity extends AppCompatActivity implements View.OnClic
         mMemoryTV = (TextView) findViewById(R.id.tv_cleancache_memory);
         mMemoryUnitTV = (TextView) findViewById(R.id.tv_cleancache_memoryunit);
         mCleanCacheFL = (FrameLayout) findViewById(R.id.fl_cleancache);
-        mFinishCleanFl = (FrameLayout) findViewById(R.id.fl_finishclean);
+        mFinishCleanFL = (FrameLayout) findViewById(R.id.fl_finishclean);
         mSizeTV = (TextView) findViewById(R.id.tv_cleanmeorysize);
         findViewById(R.id.btn_finish_cleancache).setOnClickListener(this);
     }
@@ -135,7 +138,7 @@ public class CleanCacheActivity extends AppCompatActivity implements View.OnClic
                 break;
         }
     }
-    class ClearCacheObserver extends android.content.pm.IPackageDataObserver.Stub{
+    class ClearCaCheObserver extends android.content.pm.IPackageDataObserver.Stub{
         public void onRemoveCompleted(final String packageName, final boolean succeeded){
 
         }
@@ -148,13 +151,13 @@ public class CleanCacheActivity extends AppCompatActivity implements View.OnClic
         for (Method method : methods){
             if ("freeStorageAndNotifi".equals(method.getName())){
                 try {
-                    method.invoke(pm, "",Integer.MAX_VALUE, new ClearCacheObserver());
+                    method.invoke(pm, "",Integer.MAX_VALUE, new ClearCaCheObserver());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 return;
             }
         }
-        Toast.makeText(this, "清理完毕", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "清理完毕", Toast.LENGTH_SHORT).show();
     }
 }

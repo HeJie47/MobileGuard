@@ -13,6 +13,7 @@ import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Formatter;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -79,6 +80,7 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_cache_clear_list);
         pm = getPackageManager();
         initView();
@@ -128,7 +130,7 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
                 Message msg = Message.obtain();
                 msg.what = FINISH;
                 handler.sendMessage(msg);
-            }
+            };
         };
         thread.start();
     }
@@ -159,7 +161,7 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
                 CacheInfo cacheInfo = new CacheInfo();
                 cacheInfo.cacheSize = cachesize;
                 cacheInfo.packagename = info.packageName;
-                cacheInfo.appName = (String) info.applicationInfo.loadLabel(pm).toString();
+                cacheInfo.appName = info.applicationInfo.loadLabel(pm).toString();
                 cacheInfo.appIcon = info.applicationInfo.loadIcon(pm);
                 cacheInfos.add(cacheInfo);
                 cacheMemory += cachesize;
