@@ -1,6 +1,7 @@
 package cn.edu.gdmec.android.mobileguard.m6cleancache;
 
 import android.content.Intent;
+import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
@@ -21,7 +22,6 @@ import android.widget.Toast;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import cn.edu.gdmec.android.mobileguard.R;
 import cn.edu.gdmec.android.mobileguard.m6cleancache.adapter.CacheCleanAdapter;
@@ -77,7 +77,7 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
     };
 
     @Override
-    protected void OnCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cache_clear_list);
         pm = getPackageManager();
@@ -159,7 +159,7 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
                 CacheInfo cacheInfo = new CacheInfo();
                 cacheInfo.cacheSize = cachesize;
                 cacheInfo.packagename = info.packageName;
-                cacheInfo.appName = info.applicationInfo.loadLabel(pm);
+                cacheInfo.appName = (String) info.applicationInfo.loadLabel(pm);
                 cacheInfo.appIcon = info.applicationInfo.loadIcon(pm);
                 cacheInfos.add(cacheInfo);
                 cacheMemory += cachesize;
@@ -176,7 +176,7 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
             case R.id.btn_cleanall:
                 if (cacheMemory > 0){
                     //
-                    Intent intent = new Intent(this.CleanCacheActivity.class);
+                    Intent intent = new Intent(this,CleanCacheActivity.class);
                     //
                     intent.putExtra("cacheMemory", cacheMemory);
                     startActivity(intent);
@@ -186,7 +186,7 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
         }
     }
     @Override
-    protected void onDestory(){
+    protected void onDestroy(){
         super.onDestroy();
         animation.stop();
         if (thread != null){

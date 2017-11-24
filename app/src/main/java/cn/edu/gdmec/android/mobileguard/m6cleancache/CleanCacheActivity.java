@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
 
@@ -55,9 +54,9 @@ public class CleanCacheActivity extends AppCompatActivity implements View.OnClic
     };
 
     @Override
-    protected void onCreat(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.id.activity_clean_cache);
+        setContentView(R.layout.activity_clean_cache);
         initView();
         pm = getPackageManager();
         Intent intent = getIntent();
