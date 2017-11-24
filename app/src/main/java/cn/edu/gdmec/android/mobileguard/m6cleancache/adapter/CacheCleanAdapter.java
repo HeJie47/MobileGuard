@@ -1,13 +1,13 @@
 package cn.edu.gdmec.android.mobileguard.m6cleancache.adapter;
 
 import android.content.Context;
+import android.text.format.Formatter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Formatter;
 import java.util.List;
 
 import cn.edu.gdmec.android.mobileguard.R;
