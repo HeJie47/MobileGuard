@@ -17,6 +17,9 @@
     <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
     <!--手机杀毒部分-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!--缓存清理-->
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE"/>
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -98,7 +101,7 @@
         <activity android:name=".m4appmanager.AppManagerActivity"></activity>
         <activity android:name=".m5virusscan.VirusScanActivity"></activity>
         <activity android:name=".m5virusscan.VirusScanSpeedActivity"></activity>
-        <activity android:name=".m6cleancache.CacheClearListActivity"></activity>
+        <activity android:name=".m6cleancache.CacheClearListActivity" />
         <activity android:name=".m6cleancache.CleanCacheActivity"></activity>
 
     </application>

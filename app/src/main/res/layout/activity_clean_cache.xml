@@ -27,10 +27,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/cacheclean_trash_bin_animation"/>
-                
+
                 <TextView
                     style="@style/wrapcontent"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
                     android:text="已清理垃圾文件："
                     android:textColor="@color/white"
                     android:textSize="20sp"/>

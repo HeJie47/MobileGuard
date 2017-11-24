@@ -142,7 +142,7 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
      */
     public void getCacheSize(PackageInfo info){
         try {
-            Method method = PackageManager.class.getDeclaredMethod("getPackSizeInfo", String.class, IPackageStatsObserver.class);
+            Method method = PackageManager.class.getDeclaredMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
             method.invoke(pm, info.packageName, new MyPackObserver(info));
         } catch (Exception e){
             e.printStackTrace();
