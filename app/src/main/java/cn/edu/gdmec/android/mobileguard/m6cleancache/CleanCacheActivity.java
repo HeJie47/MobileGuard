@@ -149,7 +149,7 @@ public class CleanCacheActivity extends AppCompatActivity implements View.OnClic
         //然而android6之后，这个漏洞已经被封堵了，完全无效。
         Method[] methods = PackageManager.class.getMethods();
         for (Method method : methods){
-            if ("freeStorageAndNotifi".equals(method.getName())){
+            if ("freeStorageAndNotify".equals(method.getName())){
                 try {
                     method.invoke(pm, "",Integer.MAX_VALUE, new ClearCaCheObserver());
                 } catch (Exception e) {
