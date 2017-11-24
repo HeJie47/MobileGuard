@@ -159,7 +159,7 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
                 CacheInfo cacheInfo = new CacheInfo();
                 cacheInfo.cacheSize = cachesize;
                 cacheInfo.packagename = info.packageName;
-                cacheInfo.appName = (String) info.applicationInfo.loadLabel(pm);
+                cacheInfo.appName = (String) info.applicationInfo.loadLabel(pm).toString();
                 cacheInfo.appIcon = info.applicationInfo.loadIcon(pm);
                 cacheInfos.add(cacheInfo);
                 cacheMemory += cachesize;
@@ -175,9 +175,9 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.btn_cleanall:
                 if (cacheMemory > 0){
-                    //
+                    //跳转至清理缓存的页面的Activity
                     Intent intent = new Intent(this,CleanCacheActivity.class);
-                    //
+                    //讲要清理的垃圾大小传递至另一个页面
                     intent.putExtra("cacheMemory", cacheMemory);
                     startActivity(intent);
                     finish();

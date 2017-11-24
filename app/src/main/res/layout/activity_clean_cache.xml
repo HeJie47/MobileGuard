@@ -23,7 +23,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/tv_imgv_trashbin_cacheclean"
+                    android:id="@+id/imgv_trashbin_cacheclean"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/cacheclean_trash_bin_animation"/>

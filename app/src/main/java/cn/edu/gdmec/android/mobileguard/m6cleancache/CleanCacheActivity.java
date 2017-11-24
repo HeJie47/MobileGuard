@@ -46,7 +46,7 @@ public class CleanCacheActivity extends AppCompatActivity implements View.OnClic
                         animation.stop();
                         mCleanCacheFL.setVisibility(View.GONE);
                         mFinishCleanFl.setVisibility(View.VISIBLE);
-                        mSizeTV.setText("成功清理：" + Formatter.formatFileSize(CleanCacheActivity.this, cacheMemory));;
+                        mSizeTV.setText("成功清理：" + Formatter.formatFileSize(CleanCacheActivity.this, cacheMemory));
                     }
                     break;
             }
@@ -114,7 +114,7 @@ public class CleanCacheActivity extends AppCompatActivity implements View.OnClic
         ImageView mLeftImgv = (ImageView) findViewById(R.id.imgv_leftbtn);
         mLeftImgv.setOnClickListener(this);
         mLeftImgv.setImageResource(R.drawable.back);
-        animation = (AnimationDrawable) findViewById(R.id.tv_imgv_trashbin_cacheclean).getBackground();
+        animation = (AnimationDrawable) findViewById(R.id.imgv_trashbin_cacheclean).getBackground();
         animation.setOneShot(false);
         animation.start();
         mMemoryTV = (TextView) findViewById(R.id.tv_cleancache_memory);
