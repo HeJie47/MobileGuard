@@ -80,7 +80,20 @@ public class TrafficMonitoringService extends Service {
                 }
                 dao.UpdateTodayGPRS(moblieGPRS + newGprs);
             }
+            usedFlow = usedFlow + newGprs;
+            SharedPreferences.Editor edit = mSp.edit();
+            edit.putLong("usedflow", usedFlow);
+            edit.commit();
+        };
+    };
 
+    @Override
+    public void onDestroy(){
+        if (mThread != null & !mThread.isInterrupted()){
+            flag = false;
+            mThread.interrupt();
+            mThread = null;
         }
+        super.onDestroy();
     }
 }
