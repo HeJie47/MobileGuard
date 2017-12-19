@@ -4,8 +4,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.TrafficStats;
+import android.os.Binder;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,57 +25,72 @@ public class TrafficMonitoringService extends Service {
     private long usedFlow;
     boolean flag = true;
 
+    public class MyBinder extends Binder {
+
+        public TrafficMonitoringService getService(){
+            return TrafficMonitoringService.this;
+        }
+    }
+    private MyBinder binder = new MyBinder();
+
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return binder;
+    }
+
+    public long getUsedFlow(){
+        return usedFlow;
     }
     @Override
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
         mOldRxBytes = TrafficStats.getMobileRxBytes();
         mOldTxBytes = TrafficStats.getMobileTxBytes();
         dao = new TrafficDao(this);
         mSp = getSharedPreferences("config", MODE_PRIVATE);
+        usedFlow = mSp.getLong("usedflow", 0);
         mThread.start();
     }
 
-    private Thread mThread = new Thread(){
-        public void run(){
-            while (flag){
+    private Thread mThread = new Thread() {
+        public void run() {
+            while (flag) {
                 try {
                     Thread.sleep(2000 * 60);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                updateTodayGRPS();
+                updateTodayGPRS();
             }
         }
-        private void updateTodayGRPS(){
-            //获取已经使用了的流量
-            usedFlow= mSp.getLong("usedflow", 0);
+        private void updateTodayGPRS() {
+            // 获取已经使用了的流量
+            usedFlow = mSp.getLong("usedflow", 0);
             Date date = new Date();
-            Calendar calendar = Calendar.getInstance(); //得到日历
-            calendar.setTime(date); //把当前时间赋给日历
-            if (calendar.DAY_OF_MONTH == 1 & calendar.HOUR_OF_DAY == 0 & calendar.MINUTE < 1 & calendar.SECOND < 30){
+            Calendar calendar = Calendar.getInstance(); // 得到日历
+            calendar.setTime(date);// 把当前时间赋给日历
+            if (calendar.DAY_OF_MONTH == 1 & calendar.HOUR_OF_DAY == 0
+                    & calendar.MINUTE < 1 & calendar.SECOND < 30) {
                 usedFlow = 0;
             }
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String dataString = sdf.format(date);
             long moblieGPRS = dao.getMoblieGPRS(dataString);
-            long moblieRxBytes = TrafficStats.getMobileRxBytes();
-            long moblieYxBytes = TrafficStats.getMobileTxBytes();
-            //产生新流量
-            long newGprs = (moblieRxBytes + moblieYxBytes) - mOldRxBytes -mOldTxBytes;
-            mOldRxBytes = moblieRxBytes;
-            mOldTxBytes = moblieYxBytes;
-            if (newGprs < 0){
-                //网络切换过
-                newGprs = moblieRxBytes + moblieYxBytes;
+            long mobileRxBytes = TrafficStats.getMobileRxBytes();
+            long mobileTxBytes = TrafficStats.getMobileTxBytes();
+            // 新产生的流量
+            long newGprs = (mobileRxBytes + mobileTxBytes) - mOldRxBytes
+                    - mOldTxBytes;
+            mOldRxBytes = mobileRxBytes;
+            mOldTxBytes = mobileTxBytes;
+            if (newGprs < 0) {
+                // 网络切换过
+                newGprs = mobileRxBytes + mobileTxBytes;
             }
-            if (moblieGPRS == -1){
+            if (moblieGPRS == -1) {
                 dao.insertTodayGPRS(newGprs);
-            }else{
-                if (moblieGPRS < 0){
+            } else {
+                if (moblieGPRS < 0) {
                     moblieGPRS = 0;
                 }
                 dao.UpdateTodayGPRS(moblieGPRS + newGprs);
@@ -88,8 +103,8 @@ public class TrafficMonitoringService extends Service {
     };
 
     @Override
-    public void onDestroy(){
-        if (mThread != null & !mThread.isInterrupted()){
+    public void onDestroy() {
+        if (mThread != null & !mThread.interrupted()) {
             flag = false;
             mThread.interrupt();
             mThread = null;
