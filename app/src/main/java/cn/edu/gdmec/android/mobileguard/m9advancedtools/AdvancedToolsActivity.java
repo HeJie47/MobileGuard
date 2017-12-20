@@ -1,14 +1,26 @@
 package cn.edu.gdmec.android.mobileguard.m9advancedtools;
 
-import android.content.DialogInterface;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+
+import cn.edu.gdmec.android.mobileguard.R;
 
 /**
  * Created by admin on 2017/12/19.
  */
 
-public class AdvancedToolsActivity implements DialogInterface.OnClickListener {
+public class AdvancedToolsActivity extends AppCompatActivity implements View.OnClickListener {
+
     @Override
-    public void onClick(DialogInterface dialog, int which) {
+    protected void onCreate(Bundle savadInstanceState){
+        super.onCreate(savadInstanceState);
+        setContentView(R.layout.activity_advanced_tools);
+        initView();
+    }
+    @Override
+    public void onClick(View v) {
 
     }
 }
