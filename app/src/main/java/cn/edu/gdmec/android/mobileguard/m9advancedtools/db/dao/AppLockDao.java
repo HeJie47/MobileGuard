@@ -9,7 +9,6 @@ import android.net.Uri;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.edu.gdmec.android.mobileguard.App;
 import cn.edu.gdmec.android.mobileguard.m9advancedtools.db.AppLockOpenHelper;
 
 /**
@@ -62,10 +61,10 @@ public class AppLockDao {
      * @param packagename
      * @return
      */
-    public boolean find(String packsgename){
-        SQLiteDatabase db = openHelper.getWritableDatabase();
+    public boolean find(String packagename){
+        SQLiteDatabase db = openHelper.getReadableDatabase();
         Cursor cursor = db.query("applock",null,"packagename=?",
-                new String[]{packsgename},null,null,null);
+                new String[]{packagename},null,null,null);
         if (cursor.moveToNext()){
             cursor.close();
             db.close();

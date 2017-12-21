@@ -1,10 +1,10 @@
 package cn.edu.gdmec.android.mobileguard.m9advancedtools;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -23,7 +23,7 @@ import cn.edu.gdmec.android.mobileguard.m2theftguard.utils.MD5Utils;
  * Created by Rebirth on 2017/12/20.
  */
 
-public class EnterPswActivity extends AppCompatActivity implements View.OnClickListener {
+public class EnterPswActivity extends Activity implements View.OnClickListener {
     private ImageView mAppIcon;
     private TextView mAppNameTV;
     private EditText mPswET;
@@ -39,7 +39,7 @@ public class EnterPswActivity extends AppCompatActivity implements View.OnClickL
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_enter_psw);
         sp = getSharedPreferences("config",MODE_PRIVATE);
-        password = sp.getString("PhoneAntiThefPWD",null);
+        password = sp.getString("PhoneAntiTheftPWD",null);
         Intent intent = getIntent();
         packagename = intent.getStringExtra("packagename");
         PackageManager pm = getPackageManager();

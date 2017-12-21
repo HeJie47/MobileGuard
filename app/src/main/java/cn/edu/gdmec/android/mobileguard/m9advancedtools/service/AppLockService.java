@@ -92,7 +92,7 @@ public class AppLockService extends Service{
         //创建Intent实例，用来打开输入密码页面
         intent = new Intent(AppLockService.this, EnterPswActivity.class);
         //获取ActivityManager对象
-        am = (ActivityManager)getSystemService(ACCOUNT_SERVICE);
+        am = (ActivityManager)getSystemService(ACTIVITY_SERVICE);
         startApplockService();
         super.onCreate();
     }
@@ -136,7 +136,7 @@ public class AppLockService extends Service{
                         taskInfo = taskInfos.get(0);
                         pacagekname = taskInfo.topActivity.getPackageName();
                     }
-                    System.out.print(pacagekname);
+                    System.out.println(pacagekname);
                     //判断这个包名是否需要被保护
                     if (packagenames.contains(pacagekname)){
                         //判断当前应用程序是否需要临时停止保护（输入了正确的密码）

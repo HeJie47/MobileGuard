@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ import cn.edu.gdmec.android.mobileguard.m9advancedtools.db.dao.AppLockDao;
  * Created by Rebirth on 2017/12/20.
  */
 
-public class AppLockFragment extends android.support.v4.app.Fragment {
+public class AppLockFragment extends Fragment {
     private Context context;
     private TextView mLockTV;
     private ListView mLockLV;
