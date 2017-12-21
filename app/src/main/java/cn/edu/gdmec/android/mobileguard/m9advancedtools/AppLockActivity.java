@@ -128,4 +128,3 @@ public class AppLockActivity extends FragmentActivity implements View.OnClickLis
         }
     }
 }
-
