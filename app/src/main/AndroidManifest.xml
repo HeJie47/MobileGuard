@@ -20,7 +20,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 缓存清理 -->
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
-    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
     <!-- 高级工具程序锁部分 -->
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions"/>
@@ -33,14 +32,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- <activity android:name=".SplashActivity"> -->
-        <activity android:name=".m1home.HomeActivity">
+        <activity android:name=".SplashActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".m1home.HomeActivity"/>
         <activity android:name=".m2theftguard.LostFindActivity" />
         <activity android:name=".m2theftguard.Setup1Activity" />
         <activity android:name=".m2theftguard.Setup2Activity" />
@@ -84,7 +84,7 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
-
+        <!-- 通讯卫士部分 -->
         <activity android:name=".m3communicationguard.AddBlackNumberActivity" />
         <activity android:name=".m3communicationguard.SecurityPhoneActivity" />
 
@@ -112,10 +112,28 @@
         <activity android:name=".m6cleancache.CacheClearListActivity" />
         <activity android:name=".m6cleancache.CleanCacheActivity" />
 
+        <service
+            android:name=".m8trafficmonitor.service.TrafficMonitoringService"
+            android:enabled="true"
+            android:exported="true" />
+
         <receiver
             android:name=".m8trafficmonitor.reciver.BootCompleteReciever"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true"/>
+
+        <activity android:name=".m8trafficmonitor.TrafficMonitoringActivity" />
+        <activity android:name=".m8trafficmonitor.OpenratorSetActivity" />
+        <activity android:name=".m9advancedtools.AdvancedToolsActivity" />
+        <activity android:name=".m9advancedtools.NumBelongtoActivity" />
+
+        <service
+            android:name=".m9advancedtools.service.AppLockService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".m9advancedtools.EnterPswActivity" />
+        <activity android:name=".m9advancedtools.AppLockActivity"/>
     </application>
 
 </manifest>
