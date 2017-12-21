@@ -41,7 +41,7 @@ public class TrafficMonitoringService extends Service {
         mOldTxBytes = TrafficStats.getMobileTxBytes();
         dao = new TrafficDao(this);
         mSp = getSharedPreferences("config", MODE_PRIVATE);
-        usedFlow = mSp.getLong("usedflow", 0);
+
         mThread.start();
     }
 
