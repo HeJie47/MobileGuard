@@ -13,7 +13,6 @@ import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Formatter;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -80,7 +79,7 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        getSupportActionBar ().hide (); //去掉标题栏
         setContentView(R.layout.activity_cache_clear_list);
         pm = getPackageManager();
         initView();
