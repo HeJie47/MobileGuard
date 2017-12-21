@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class AdvancedToolsActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savadInstanceState){
         super.onCreate(savadInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_advanced_tools);
         initView();
     }
@@ -43,10 +45,15 @@ public class AdvancedToolsActivity extends AppCompatActivity implements View.OnC
             case R.id.imgv_leftbtn:
                 finish();
                 break;
+            case R.id.advanceview_applock:
+                //进入程序锁页面
+                startActivity(AppLockActivity.class);
+                break;
             case R.id.advanceview_numbelongs:
                 //进入归属地查询页面
                 startActivity(NumBelongtoActivity.class);
                 break;
+
         }
     }
     /**

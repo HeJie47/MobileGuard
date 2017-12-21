@@ -19,7 +19,8 @@ import cn.edu.gdmec.android.mobileguard.m9advancedtools.db.AppLockOpenHelper;
 public class AppLockDao {
     private Context context;
     private AppLockOpenHelper openHelper;
-    private Uri uri = Uri.parse(App.APPLOCK_CONTENT_URI);
+    private Uri uri = Uri.parse("content://cn.edu.gdmec.android.mobileguard.m9advancedtools.applock");
+    //private Uri uri = Uri.parse(App.APPLOCK_CONTENT_URI);
     public AppLockDao(Context context){
         this.context = context;
         openHelper = new AppLockOpenHelper(context);

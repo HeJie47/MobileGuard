@@ -18,17 +18,19 @@ public class NumBelongtoDao {
      *              电话号码
      *  @return 归属地
      */
-    public static String getLocation(Context context, String phonenumber){
+    public static String getLocation(String phonenumber){
 
         String location = phonenumber;
 
-        String dbname = context.getFilesDir() + "/address.db";
-        System.out.println(dbname);
-        SQLiteDatabase db = SQLiteDatabase.openDatabase(dbname, null, SQLiteDatabase.OPEN_READONLY);
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(
+                "/data/data/cn.edu.gdmec.android.mobileguard/files/address.db", null,
+                SQLiteDatabase.OPEN_READONLY);
+
 
         if (phonenumber.matches("^1[34578]\\d{9}$")){
             //手机号码的查询
-            Cursor cursor = db.rawQuery("select location from data2 where id =(select outkey from datal where id=?)", new String[]{ phonenumber.substring(0,7)});
+            Cursor cursor = db.rawQuery("select location from data2 where id =(select outkey from datal where id=?)",
+                    new String[]{ phonenumber.substring(0,7)});
             if (cursor.moveToNext()){
                 location = cursor.getString(0);
             }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -15,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cn.edu.gdmec.android.mobileguard.App;
 import cn.edu.gdmec.android.mobileguard.R;
 import cn.edu.gdmec.android.mobileguard.m2theftguard.utils.MD5Utils;
 
@@ -36,6 +36,7 @@ public class EnterPswActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_enter_psw);
         sp = getSharedPreferences("config",MODE_PRIVATE);
         password = sp.getString("PhoneAntiThefPWD",null);
@@ -77,7 +78,8 @@ public class EnterPswActivity extends AppCompatActivity implements View.OnClickL
                         if (MD5Utils.encode(inputpsw).equals(password)){
                             //发送自定义的广播消息
                             Intent intent = new Intent();
-                            intent.setAction(App.APPLOCK_ACTION);
+                            //intent.setAction(App.APPLOCK_ACTION);
+                            intent.setAction("cn.edu.gdmec.android.mobileguard.m9advancedtools.applock");
                             intent.putExtra("packagename",packagename);
                             sendBroadcast(intent);
                             finish();

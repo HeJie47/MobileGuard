@@ -1,5 +1,6 @@
 package cn.edu.gdmec.android.mobileguard.m9advancedtools;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,10 +25,15 @@ public class NumBelongtoActivity extends AppCompatActivity implements View.OnCli
     private EditText mNumET;
     private TextView mResultTV;
     private String dbName = "address.db";
+    private Handler mHandler = new Handler(){
+        public void handleMessage(android.os.Message msg) {
 
+        };
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_num_belongto);
         initView();
         copyDB(dbName);
@@ -85,7 +92,7 @@ public class NumBelongtoActivity extends AppCompatActivity implements View.OnCli
                         copyDB(dbName);
                     }
                     //查询数据库
-                    String location = NumBelongtoDao.getLocation(this,phonenumber);
+                    String location = NumBelongtoDao.getLocation(phonenumber);
                     mResultTV.setText("归属地： " + location);
                 } else {
                     Toast.makeText(this, "请输入需要查询的号码", Toast.LENGTH_SHORT).show();

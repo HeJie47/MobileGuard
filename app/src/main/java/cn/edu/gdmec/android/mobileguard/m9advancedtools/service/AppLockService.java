@@ -16,7 +16,6 @@ import android.os.IBinder;
 
 import java.util.List;
 
-import cn.edu.gdmec.android.mobileguard.App;
 import cn.edu.gdmec.android.mobileguard.m9advancedtools.EnterPswActivity;
 import cn.edu.gdmec.android.mobileguard.m9advancedtools.db.dao.AppLockDao;
 
@@ -28,7 +27,8 @@ public class AppLockService extends Service{
     /**是否开启程序锁服务的标签*/
     private boolean flag = false;
     private AppLockDao dao;
-    private Uri uri = Uri.parse(App.APPLOCK_CONTENT_URI);
+    //private Uri uri = Uri.parse(App.APPLOCK_CONTENT_URI);
+    private Uri uri = Uri.parse("content://cn.edu.gdmec.android.mobileguard.m9advancedtools.applock");
     private List<String> packagenames;
     private Intent intent;
     private ActivityManager am;
@@ -44,7 +44,8 @@ public class AppLockService extends Service{
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (App.APPLOCK_ACTION.equals(intent.getAction())){
+            //if (App.APPLOCK_ACTION.equals(intent.getAction())){
+            if ("cn.edu.gdmec.android.mobileguard.m9advancedtools.applock".equals(intent.getAction())) {
                 tempStopProtectPackname = intent.getStringExtra("packagename");
             }else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())){
                 tempStopProtectPackname = null;
@@ -83,7 +84,8 @@ public class AppLockService extends Service{
         observer = new MyObserver(new Handler());
         getContentResolver().registerContentObserver(uri,true,observer);
         receiver = new AppLockReceiver();
-        IntentFilter filter = new IntentFilter(App.APPLOCK_ACTION);
+        //IntentFilter filter = new IntentFilter(App.APPLOCK_ACTION);
+        IntentFilter filter = new IntentFilter("cn.edu.gdmec.android.mobileguard.m9advancedtools.applock");
         filter.addAction(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(receiver,filter);
