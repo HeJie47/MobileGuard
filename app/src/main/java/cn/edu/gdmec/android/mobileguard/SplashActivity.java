@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
         mVersion = MyUtils.getVersion(getApplicationContext());
         mTvVersion = (TextView)findViewById(R.id.tv_splash_version);
         mTvVersion.setText("版本号："+mVersion);
-        if (!hasWindowFocus()) {
+        if (!hasPermission()) {
             //若用户未开启权限，则引导用户开启"Apps with usage accesss"权限
             startActivityForResult(
                     new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS),
