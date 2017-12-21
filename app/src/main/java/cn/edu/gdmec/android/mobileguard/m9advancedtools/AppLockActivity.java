@@ -1,12 +1,11 @@
 package cn.edu.gdmec.android.mobileguard.m9advancedtools;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -26,7 +25,7 @@ import cn.edu.gdmec.android.mobileguard.m9advancedtools.fragment.AppUnLockFragme
 public class AppLockActivity extends FragmentActivity implements View.OnClickListener {
 
     private ViewPager mAppViewPager;
-    List<android.support.v4.app.Fragment> mFragments = new ArrayList<android.support.v4.app.Fragment>();
+    List<Fragment> mFragments = new ArrayList<Fragment>();
     private TextView mLockTV;
     private TextView mUnLockTV;
     private View slideLockView;

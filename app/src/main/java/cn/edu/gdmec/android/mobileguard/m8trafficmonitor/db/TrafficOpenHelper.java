@@ -21,8 +21,10 @@ public class TrafficOpenHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table" + TABLE_NAME + "(id integer primary key autoincrement," + GPRS + "varchar(255)," + TIME + "datetime)");
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("create table " + TABLE_NAME
+                + "(id integer primary key autoincrement," + GPRS
+                + " varchar(255)," + TIME + " datetime)");
     }
 
     @Override
