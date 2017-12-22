@@ -138,5 +138,6 @@ public class AppLockFragment extends Fragment {
                 }.start();
             }
         });
+
     }
 }
