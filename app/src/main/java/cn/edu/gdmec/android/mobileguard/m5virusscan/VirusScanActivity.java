@@ -38,8 +38,7 @@ public class VirusScanActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate ( savedInstanceState );
-        requestWindowFeature( Window.FEATURE_NO_TITLE);
-        getSupportActionBar ().hide (); //去掉标题栏
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView ( R.layout.activity_virus_scan );
         mSP = getSharedPreferences ( "config", MODE_PRIVATE );
 
