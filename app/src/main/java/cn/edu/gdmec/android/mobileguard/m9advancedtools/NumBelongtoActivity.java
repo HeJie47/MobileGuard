@@ -25,15 +25,10 @@ public class NumBelongtoActivity extends AppCompatActivity implements View.OnCli
     private EditText mNumET;
     private TextView mResultTV;
     private String dbName = "address.db";
-    private Handler mHandler = new Handler(){
-        public void handleMessage(android.os.Message msg) {
 
-        };
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_num_belongto);
         initView();
         copyDB(dbName);
@@ -43,7 +38,8 @@ public class NumBelongtoActivity extends AppCompatActivity implements View.OnCli
      * 初始化控件
      */
     private void initView() {
-        findViewById(R.id.rl_titlebar).setBackgroundColor(getResources().getColor(R.color.bright_red));
+        findViewById(R.id.rl_titlebar).setBackgroundColor(
+                getResources().getColor(R.color.bright_red));
         ImageView mLeftImgv = (ImageView) findViewById(R.id.imgv_leftbtn);
         ((TextView) findViewById(R.id.tv_title)).setText("号码归属地查询");
         mLeftImgv.setOnClickListener(this);
@@ -59,7 +55,8 @@ public class NumBelongtoActivity extends AppCompatActivity implements View.OnCli
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
             }
 
             @Override
@@ -90,7 +87,7 @@ public class NumBelongtoActivity extends AppCompatActivity implements View.OnCli
                         copyDB(dbName);
                     }
                     //查询数据库
-                    String location = NumBelongtoDao.getLocation(phonenumber);
+                    String location = NumBelongtoDao.getLocation(this,phonenumber);
                     mResultTV.setText("归属地： " + location);
                 } else {
                     Toast.makeText(this, "请输入需要查询的号码", Toast.LENGTH_SHORT).show();
