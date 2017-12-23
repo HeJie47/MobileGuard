@@ -33,4 +33,6 @@ public class AppInfo {
             return "外部存储";
         }
     }
+    /**应用程序是否加锁*/
+    public boolean isLock;
 }

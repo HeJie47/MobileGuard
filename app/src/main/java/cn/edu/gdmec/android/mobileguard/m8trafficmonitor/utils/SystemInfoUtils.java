@@ -16,7 +16,7 @@ public class SystemInfoUtils {
      * @return
      */
     public static boolean isServiceRunning(Context context, String className){
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningServiceInfo> infos = am.getRunningServices(200);
         for (ActivityManager.RunningServiceInfo info:infos){
             String serviceClassName = info.service.getClassName();

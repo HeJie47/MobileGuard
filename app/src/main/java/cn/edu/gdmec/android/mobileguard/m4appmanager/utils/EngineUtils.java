@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -128,4 +129,23 @@ public class EngineUtils {
         }
     }
 
+    public static void ActivityApp(Context context,AppInfo appInfo){
+        PackageManager pm = context.getPackageManager ();
+        StringBuffer sb = new StringBuffer();
+        ActivityInfo activityInfo[] = pm.getPackageArchiveInfo(appInfo.apkPath,PackageManager.GET_ACTIVITIES).activities;
+        for (int i=0;i<activityInfo.length;i++){
+            sb.append(activityInfo[i].toString());
+            sb.append("\n");
+        }
+        AlertDialog.Builder builder =new AlertDialog.Builder(context);
+        builder.setTitle(appInfo.appName);
+        builder.setMessage(sb);
+        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
+    }
 }
