@@ -46,8 +46,6 @@ public class SplashActivity extends AppCompatActivity {
             }
         };
         final VersionUpdateUtils versionUpdateUtils=new VersionUpdateUtils(mVersion,SplashActivity.this,downloadCallback,HomeActivity.class);
-
-
         new Thread(){
             @Override
             public void run(){
@@ -78,10 +76,10 @@ public class SplashActivity extends AppCompatActivity {
         return mode == AppOpsManager.MODE_ALLOWED;
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == MY_PERMISSIONS_REQUEST_PACKAGE_USAGE_STATS){
             if (!hasPermission ()){
+                //若用户开启权限，则引导用户开启"Apps with usage access"权限
                 startActivityForResult (
                         new Intent ( Settings.ACTION_USAGE_ACCESS_SETTINGS ),
                         MY_PERMISSIONS_REQUEST_PACKAGE_USAGE_STATS
